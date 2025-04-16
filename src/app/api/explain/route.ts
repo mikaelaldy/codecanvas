@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   // Get the generative model with correct model name
   const model = genAI.getGenerativeModel({ 
-    model: 'gemini-1.5-flash',  // Using the latest recommended model
+    model: 'gemini-1.5-flash',
     generationConfig: {
       temperature: 0.7,
       topK: 40,
@@ -29,6 +29,7 @@ export async function POST(req: Request) {
       
       Use simple analogies where appropriate to help understand the code better.
       Format your explanation with clear sections and bullet points where helpful.
+      Do not use markdown formatting, just plain text with clear section headers.
       
       Code:
       ${prompt}

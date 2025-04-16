@@ -54,6 +54,35 @@ export default function ExplainPage() {
     }
   };
 
+  const formatExplanation = (text: string) => {
+    const sections = text.split('\n\n');
+    return sections.map((section, index) => {
+      if (section.startsWith('**') && section.endsWith('**')) {
+        return (
+          <h3 key={index} className="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">
+            {section.replace(/\*\*/g, '')}
+          </h3>
+        );
+      } else if (section.startsWith('* ')) {
+        return (
+          <ul key={index} className="list-disc pl-6 mb-4">
+            {section.split('\n').map((item, i) => (
+              <li key={i} className="text-gray-700 dark:text-gray-300 mb-1">
+                {item.replace('* ', '')}
+              </li>
+            ))}
+          </ul>
+        );
+      } else {
+        return (
+          <p key={index} className="text-gray-700 dark:text-gray-300 mb-4">
+            {section}
+          </p>
+        );
+      }
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Navigation */}
@@ -133,9 +162,7 @@ export default function ExplainPage() {
                   </div>
                 ) : completion ? (
                   <div className="prose dark:prose-invert max-w-none">
-                    {completion.split('\n').map((line, i) => (
-                      <p key={i} className="mb-2">{line}</p>
-                    ))}
+                    {formatExplanation(completion)}
                   </div>
                 ) : (
                   <div className="flex items-center justify-center h-full">
